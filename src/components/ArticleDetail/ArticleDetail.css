@@ -1,0 +1,41 @@
+.article-detail__box {
+
+}
+
+.article__description {
+    color: rgba(0, 0, 0, 0.5);
+    font: 12px/22px ABeeZee, sans-serif;
+    padding-bottom: 25px;
+    padding-top: 16px;
+}
+
+.article__body {
+    font-size: 18px;
+    line-height: 28px;
+}
+
+.article__description-box {
+    display: flex;
+    justify-content: space-between;
+}
+
+.article__buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.article__edit {
+    border: #52C41A solid 1px;
+    color: #52C41A;
+}
+
+.article__delete {
+    border: #F5222D solid 1px;
+    color: #F5222D;
+}
+
+.article__edit, .article__delete {
+    padding: 0 12px;
+    height: 30px;
+}

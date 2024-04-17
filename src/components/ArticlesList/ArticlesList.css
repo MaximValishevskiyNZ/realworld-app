@@ -1,0 +1,83 @@
+.article-list {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    align-items: center;
+}
+
+.article {
+     width: 75%;
+
+     background: white;
+    padding: 15px;
+    box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.15);
+}
+
+.article__header {
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+}
+
+.article__header-left-top {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+
+}
+
+.article__header-favourites {
+    font-size: 12px;
+    white-space: nowrap;
+}
+
+.article__title {
+    font-size: 20px;
+    color: #1890ff;
+    line-height: 140%;
+    margin-bottom: 4px;
+}
+
+.article__header-left {
+    max-width: 70%;
+
+}
+
+.article__header-left-tags {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 4px;
+}
+
+.tag {
+    padding: 0 5px;
+    border: #404040 solid 1px;
+    font-size: 12px;
+    white-space: nowrap;
+}
+
+.author-image {
+    width: 46px;
+    height: 46px;
+}
+
+.article__header-right {
+    display: flex;
+    justify-content: space-between;
+    gap: 14px;
+}
+
+.article__header-created{
+    font: 12px/183% ABeeZee, sans-serif;
+    color: rgba(0, 0, 0, 0.5);
+}
+
+.ant-pagination-item-active {
+    background-color: #1890ff !important; /* Цвет фона активной кнопки */
+}
+
+.ant-pagination-item-active a{
+    color: white !important; /* Цвет текста активной кнопки */
+}

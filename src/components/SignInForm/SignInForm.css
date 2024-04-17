@@ -1,0 +1,9 @@
+.form__reroute {
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 20px;
+    margin-top: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

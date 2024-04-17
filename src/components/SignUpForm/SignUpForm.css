@@ -1,0 +1,85 @@
+.sign-up__container {
+    background: white;
+    padding: 48px 36px;
+    box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.15);
+    width: 400px;
+
+}
+
+.sign-up__title {
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 28px;
+    text-align: center;
+    color: #262626;
+}
+
+.sign-up__form {
+    /*display: flex;*/
+    /*flex-direction: column;*/
+    /*gap: 12px;*/
+}
+
+.form-input {
+    width: 100%;
+    margin-bottom: 12px;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    text-align: left;
+    padding: 8px 12px;
+    border: #D9D9D9 solid 1px;
+    border-radius: 0.25rem;
+    color: #BFBFBF;
+}
+
+.form-input.red {
+    border-color: red;
+}
+
+
+.form-label {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 22px;
+    text-align: left;
+}
+
+.terms-agreement {
+    border-top: #E8E8E8 solid 1px;
+    padding-top: 8px;
+    display: flex;
+    margin-top: 29px;
+    gap: 8px;
+    color: #595959;
+    line-height: 22px;
+    margin-bottom: 21px;
+}
+
+.terms-checkbox {
+    aspect-ratio: 0.72;
+    width: 16px;
+    align-self: start;
+}
+
+.sign-up__confirm {
+    background: #1890FF;
+    color: white;
+    width: 100%;
+    padding: 8px 0;
+}
+
+
+.sign-up__error::first-letter {
+    text-transform: uppercase;
+}
+
+.sign-up__error {
+    position: relative;
+    top: -12px;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 22px;
+    text-align: left;
+    color: red;
+}

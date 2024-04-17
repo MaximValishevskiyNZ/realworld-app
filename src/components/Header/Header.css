@@ -1,0 +1,34 @@
+.header {
+    height: 80px;
+    width: 100%;
+    padding: 0 22px;
+    background: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.title__buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 26px;
+    width: fit-content;
+}
+
+.profile-link {
+    display: flex;
+    gap: 13px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.create-article {
+    border: #52C41A solid 1px;
+    color: #52C41A;
+}
+
+.header__title {
+    font-size: 18px;
+    line-height: 28px;
+}

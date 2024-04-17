@@ -1,0 +1,26 @@
+.article-form__container {
+    background: white;
+    padding: 48px 36px;
+    box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.15);
+    width: 80%;
+}
+
+.tag-container {
+    display: flex;
+    gap: 17px;
+}
+
+.delete-btn, .add-btn {
+    padding: 0 35px;
+    height: 40px;
+}
+
+.delete-btn {
+    border: #F5222D solid 1px;
+    color: #F5222D;
+}
+
+.add-btn {
+    border: #1890FF solid 1px;
+    color: #1890FF;
+}
