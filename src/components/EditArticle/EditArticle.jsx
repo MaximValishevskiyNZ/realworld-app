@@ -10,6 +10,7 @@ export default function EditArticle() {
     const {slug} = useParams()
     const [article, setArticle] = useState()
     const navigate = useNavigate();
+    const [defaultSet, setDefaultSet] = useState(true)
 
     useEffect(() => {
         fetch(`https://blog.kata.academy/api/articles/${slug}`)
@@ -18,9 +19,13 @@ export default function EditArticle() {
     }, []);
 
     useEffect(() => {
-        if (user && article) {
-            if (article.author.username === user.username) {
-                console.log(article)
+        if (user && article && defaultSet) {
+            setValue('title', article.title)
+            setValue('description', article.description)
+            setValue('body', article.body)
+            setValue('tagList', article.tagList.map((t) => ({value: t})))
+            if (article.author.username === user.username ) {
+
             } else {
                 navigate('/')
             }
@@ -33,6 +38,7 @@ export default function EditArticle() {
         }
     }, [isAuthenticated]);
 
+
     const validationSchema = yup.object({
         title: yup.string().required('Title is required')
             .min(5, 'Title must be at least 5 characters')
@@ -42,27 +48,26 @@ export default function EditArticle() {
             .max(200, 'Description must be at most 200 characters'),
         body: yup.string().required('Text is required')
             .min(10, 'Text must be at least 10 characters'),
-        tags: yup.array().of(yup.object({
+        tagList: yup.array().of(yup.object({
             value: yup.string().required('Tag value is required')
                 .min(1, 'Tag value must be at least 1 character')
         }))
     });
 
     const {register, handleSubmit, control, formState: { errors }, setValue} = useForm({
-        resolver: yupResolver(validationSchema),
+        resolver: yupResolver(validationSchema)
     });
 
     const {fields, append, remove} = useFieldArray({
         control,
-        name: "tags"
+        name: "tagList"
     });
 
     const onSubmit = async (data) => {
-
+    console.log(data)
         const body = {
-            article: {...data, tagList: [...data.tags.map((tag) => tag.value.toString())]}
+            article: {...data, tagList: [...data.tagList.map((tag) => tag.value.toString())]}
         }
-        console.log(body)
         const response = await fetch(`https://blog.kata.academy/api/articles/${slug}`, {
             method: 'PUT',
             headers: {
@@ -71,12 +76,14 @@ export default function EditArticle() {
             },
             body: JSON.stringify(body),
         });
+        console.log(await response)
         if (response.ok) {
             navigate('/')
         } else {
             alert('Server error.')
         }
     }
+
 
     return (
         user && article && <div className="article-form__container">
@@ -92,11 +99,10 @@ export default function EditArticle() {
                     placeholder="Title"
                     aria-label="Title"
                     {...register('title')}
-                    defaultValue={article.title}
                 />
-                {errors.title && <div className="sign-up__error">{errors.title.message}</div>}
+                {errors && errors.title && <div className="sign-up__error">{errors.title.message}</div>}
                 <label htmlFor="description" className="form-label">
-                    Title
+                    Description
                 </label>
                 <input
                     type="text"
@@ -105,9 +111,8 @@ export default function EditArticle() {
                     placeholder="Short description"
                     aria-label="Short description"
                     {...register('description')}
-                    defaultValue={article.description}
                 />
-                {errors.description && <div className="sign-up__error">{errors.description.message}</div>}
+                {errors && errors.description && <div className="sign-up__error">{errors.description.message}</div>}
                 <label htmlFor="text" className="form-label">
                     Text
                 </label>
@@ -118,13 +123,13 @@ export default function EditArticle() {
                     rows='5'
                     aria-label="Text"
                     {...register('body')}
-                    defaultValue={article.body}
                 />
-                {errors.body && <div className="sign-up__error">{errors.body.message}</div>}
+                {errors && errors.body && <div className="sign-up__error">{errors.body.message}</div>}
                 <div className="form-label">
                     Tags
                 </div>
-                {article.tagList.map((field, index) => (
+                {fields.map((field, index) => (
+
                     <div key={index} className='tag-container'>
                         <div className='tag-input-container'>
                             <input
@@ -132,16 +137,16 @@ export default function EditArticle() {
                                 className='form-input w-[300px]'
                                 placeholder="Tag"
                                 aria-label="Tag"
-                                {...register(`tags.${index}.value`)}
-                                defaultValue={field}
+                                {...register(`tagList.${index}.value`)}
+                                defaultValue={Object.values({...field, id: ''}).join('')}
                             />
-                            { errors.tags && errors.tags[index] && <div className="sign-up__error">{errors.tags[index].value.message}</div>}
+                            { errors && errors.tagList && errors.tagList[index] && <div className="sign-up__error">{errors.tagList[index].value.message}</div>}
                         </div>
                         <button type="button" className='delete-btn rounded' onClick={() => remove(index)}>Remove</button>
-                        { article.tagList.length === index + 1 && <button type="button" className='add-btn rounded' onClick={() => append({value: ''})}>Add Tag</button>}
+                        { fields.length === index + 1 && <button type="button" className='add-btn rounded' onClick={() => append({value: ''})}>Add Tag</button>}
                     </div>
                 ))}
-                { article.tagList.length === 0 && <button type="button" className='add-btn rounded block' onClick={() => append({value: ''})}>Add Tag</button>}
+                { fields.length === 0 && <button type="button" className='add-btn rounded block' onClick={() => append({value: ''})}>Add Tag</button>}
                 <button className='sign-up__confirm rounded w-[319px] mt-[20px]' type='submit'>Send</button>
             </form>
         </div>

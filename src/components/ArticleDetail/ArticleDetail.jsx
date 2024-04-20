@@ -5,7 +5,9 @@ import {format} from "date-fns";
 import ReactMarkdown from "react-markdown";
 import './ArticleDetail.css'
 import {AuthContext} from "../../hooks/authContext.jsx";
-import { Button, message, Popconfirm } from 'antd';
+import {Button, message, Popconfirm} from 'antd';
+import NewArticle from "../NewArticle/NewArticle.jsx";
+
 export default function ArticleDetail() {
     const {isAuthenticated, user, cookies} = useContext(AuthContext);
     const {slug} = useParams()
@@ -38,8 +40,8 @@ export default function ArticleDetail() {
                 },
                 body: JSON.stringify(user),
             });
-            response.then(window.location.reload())
-
+            const {article: newArticle} = await response.json();
+            setArticle(newArticle)
         }
     }
 
@@ -72,11 +74,11 @@ export default function ArticleDetail() {
                         <h5 className='article__title'>
                             {article.title}
                         </h5>
-                        <span className={`article__header-favourites ${article.favorited ? 'text-red-500' : ''}`}
-                              onClick={() => changeLikes(article)}>
-                                                <HeartOutlined/>
+                        <button className={`article__header-favourites ${article.favorited ? 'text-red-500' : ''}`}
+                                onClick={() => changeLikes(article)}>
+                            <HeartOutlined/>
                             {`   ${article.favoritesCount}`}
-                                            </span>
+                        </button>
                     </div>
                     <div className='article__header-left-tags'>
                         {
@@ -102,18 +104,19 @@ export default function ArticleDetail() {
                         {`${article.description}`}
                     </ReactMarkdown>
                 </div>
-                {user && article && article.author.username === user.username && <div className='article__buttons'>
-                    <Popconfirm
-                        title="Are you sure to delete this article?"
-                        onConfirm={confirm}
-                        onCancel={cancel}
-                        okText="Yes"
-                        cancelText="No"
-                    >
-                        <Button className='article__delete rounded'>Delete</Button>
-                    </Popconfirm>
-                    <button className='article__edit rounded'><Link to={`/articles/${slug}/edit`}>Edit</Link></button>
-                </div>}
+                {isAuthenticated && user && article && article.author.username === user.username &&
+                    <div className='article__buttons'>
+                        <Popconfirm
+                            title="Are you sure to delete this article?"
+                            onConfirm={confirm}
+                            onCancel={cancel}
+                            okText="Yes"
+                            cancelText="No"
+                        >
+                            <Button className='article__delete rounded'>Delete</Button>
+                        </Popconfirm>
+                        <div className='article__edit rounded'><Link to={`/articles/${slug}/edit`}>Edit</Link></div>
+                    </div>}
             </div>
             <div className='article__body'>
                 <ReactMarkdown>

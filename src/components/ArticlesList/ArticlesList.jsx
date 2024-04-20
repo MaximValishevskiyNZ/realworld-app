@@ -44,19 +44,21 @@ export default function ArticlesList() {
 
     const changeLikes = async (article) => {
         if (isAuthenticated) {
-            const method =  article.favorited ? 'DELETE' : 'POST'
+            const method = article.favorited ? 'DELETE' : 'POST'
             const response = await fetch(`https://blog.kata.academy/api/articles/${article.slug}/favorite`, {
-                    method: method,
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Token ${cookies['token-auth']}`,
-                    },
-                    body: JSON.stringify(user),
-                });
-                response.then(getArticles(currentPage))
-
+                method: method,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Token ${cookies['token-auth']}`,
+                },
+                body: JSON.stringify(user),
+            });
+            const {article: newArticle} = await response.json();
+            const newArticles = articlesData.articles.map((article) => article.slug === newArticle.slug ? newArticle : article)
+            setArticlesData({...articlesData, articles: newArticles})
         }
     }
+
 
 
     return (
@@ -71,13 +73,13 @@ export default function ArticlesList() {
                                 <div className='article__header'>
                                     <div className='article__header-left'>
                                         <div className='article__header-left-top'>
-                                            <h5 className='article__title line-clamp-2'>
+                                            <h2 className='article__title line-clamp-2'>
                                                 <Link to={`/articles/${article.slug}`}>{article.title}</Link>
-                                            </h5>
-                                            <span className={`article__header-favourites ${article.favorited ? 'text-red-500' : ''}`} onClick={() => changeLikes(article)}>
+                                            </h2>
+                                            <button className={`article__header-favourites ${article.favorited ? 'text-red-500' : ''}`} onClick={() => changeLikes(article)}>
                                                 <HeartOutlined/>
                                                 {`   ${article.favoritesCount}`}
-                                            </span>
+                                            </button>
                                         </div>
                                         <div className='article__header-left-tags'>
                                             {

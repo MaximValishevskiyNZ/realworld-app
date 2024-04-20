@@ -27,6 +27,7 @@ export default function NewArticle() {
 
     const {register, handleSubmit, control, formState: { errors }, setValue} = useForm({
         resolver: yupResolver(validationSchema),
+
     });
 
 
